@@ -305,7 +305,7 @@ class DQNAgent:
             self.cumulative_environment_reward_per_episode.append(environment_reward_t)
             self.cumulative_auxiliary_reward_per_episode.append(auxiliary_reward_t)
 
-        torch.save(self.policy_net.state_dict(), 'dqn_policynet.pth')
+        torch.save(self.policy_net.state_dict(), 'model_dqn/dqn_policynet.pth')
 
         
     def evaluate(self, modelfile, seedfile, num_episodes):
@@ -402,4 +402,4 @@ if __name__ == '__main__':
     #hyperparameter_tuning()
     # Run the agent training
     train_agent_with_hyperparameters(64, 0.99, 0.9, 0.1, 100000, 0.0001, 1e-4, 3000)
-    evaluate_agent('dqn_policynet.pth', 'seeds.json', 64, 0.99, 0.9, 0.1, 100000, 0.0001, 1e-4, 1000)
+    evaluate_agent('model_dqn/dqn_policynet.pth', 'seeds.json', 64, 0.99, 0.9, 0.1, 100000, 0.0001, 1e-4, 1000)

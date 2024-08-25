@@ -299,10 +299,7 @@ class DQNAgent:
         next_state_values = torch.zeros(self.BATCH_SIZE, device=device)
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1).values
-        #for ri in reward_int_batch:
-        #    self.reward_stats.update(ri.detach())
-        #print("Total reward:", torch.sum(reward_batch + ((reward_int_batch.detach()-self.reward_stats.mean)/self.reward_stats.std).clamp(-5,5) * self.reward_factor))
-        #print("Just intrinsic reward:", ((reward_int_batch.detach()-self.reward_stats.mean)/self.reward_stats.std).clamp(-5,5))
+       
         expected_state_action_values = (next_state_values * self.GAMMA) + reward_batch + ((reward_int_batch.detach()-self.reward_stats.mean)/self.reward_stats.std).clamp(-5,5) * self.reward_factor
         expected_state_action_values = expected_state_action_values.float()
 
@@ -430,9 +427,9 @@ def train_agent_with_hyperparameters(BATCH_SIZE, GAMMA, EPS_START, EPS_END, EPS_
     hyperparameters = f"BATCH_SIZE={BATCH_SIZE}_GAMMA={GAMMA}_EPS_START={EPS_START}_EPS_END={EPS_END}_EPS_DECAY={EPS_DECAY}_TAU={TAU}_LR={LR}"
     
     # Save the list to a file
-    with open('data_rnd/rnd_episode_durations.json', 'w') as f:
+    with open('dqn_rnd/data_rnd/rnd_episode_durations.json', 'w') as f:
         json.dump(agent.episode_durations, f)
-    with open('data_rnd/rnd_cumulative_environment_reward_per_episode.json', 'w') as f:
+    with open('dqn_rnd/data_rnd/rnd_cumulative_environment_reward_per_episode.json', 'w') as f:
         json.dump(agent.cumulative_environment_reward_per_episode, f)
 
     plot_durations(agent.episode_durations, run_id)
@@ -470,4 +467,4 @@ if __name__ == '__main__':
     run_id = 1
 
     episode_durations,cum_r, cum_env_r, cum_int_r, agent_performance = train_agent_with_hyperparameters(64, 0.99, 0.9, 0.1, 100000, 0.0005, run_id, 1e-4)
-    evaluate_agent('model_rnd/rnd_dqn_policynet.pth', 'agent_comparison/seeds.json', 64, 0.99, 0.9, 0.1, 100000, 0.0001, 1e-4, run_id, 1000)
+    evaluate_agent('model_rnd/rnd_dqn_policynet.pth', 'seeds.json', 64, 0.99, 0.9, 0.1, 100000, 0.0001, 1e-4, run_id, 1000)
