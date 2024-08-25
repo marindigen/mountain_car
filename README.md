@@ -15,3 +15,7 @@ All three methods effectively addressed the sparse reward problem in the Mountai
 ### Conclusion
 
 This project demonstrates that incorporating auxiliary rewards or utilizing a model-based approach can significantly enhance the learning process in environments with sparse rewards. The Dyna-agent and DQN with heuristic rewards are recommended for tasks requiring stable and consistent policy learning.
+
+
+### Additional Notes
+Please adjust the file paths for saving plots and models to suit your setup.
